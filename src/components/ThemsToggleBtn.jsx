@@ -1,0 +1,36 @@
+import React, { useEffect } from 'react'
+import { assets } from '../assets/assets'
+
+const ThemsToggleBtn = ({theme,setTheme}) => {
+  useEffect(() => {
+    const preferDarkMode = window.matchMedia('(prefers-color-scheme:dark)').matches
+    setTheme(theme || (preferDarkMode ? 'dark' : 'light'))
+  },[])
+
+    useEffect(() => {
+        if(theme === 'dark'){
+            document.documentElement.classList.add('dark')
+        }
+        else{
+            document.documentElement.classList.remove('dark')
+        }
+        localStorage.setItem('theme',theme)
+    },[theme])
+
+  return (
+    <>
+      <button>
+        {
+        theme === 'dark' ? (
+            <img onClick={() => setTheme('light')} src={assets.sunIcon} className='size-8.5 p-1.5 border border-gray-500 rounded-full bg-white' alt="Sun Icon" />
+        ) : (
+            <img onClick={() => setTheme('dark')} alt='Moon Icon' src={assets.moonIcon} className='size-8.5 p-1.5 border border-gray-500 rounded-full'   />
+        )
+      }</button>
+    </>
+  )
+}
+
+export default ThemsToggleBtn
+
+
